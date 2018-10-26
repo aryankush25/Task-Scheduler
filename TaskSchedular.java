@@ -21,7 +21,9 @@ class TaskSchedular
             i++;
         }
 
-        DivideTask divide = new DivideTask(mainQueue);
+        DivideTask divide = new DivideTask();
+
+        divide.addInSubQueue(mainQueue);
 
         divide.ShowData();
 

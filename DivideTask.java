@@ -3,6 +3,18 @@ import java.util.ArrayList;
 public class DivideTask
 {
     private ArrayList<SubQueue> array = new ArrayList<>();
+    private int numberOfQueues;
+    private int maxQueues = 4;
+    DivideTask()
+    {
+        numberOfQueues = 0;
+    }
+
+    DivideTask(LinkedQueue<Data> mainQueue)
+    {
+        numberOfQueues = 0;
+        addInSubQueue(mainQueue);
+    }
 
     private static int Time(String subj)
     {
@@ -30,7 +42,7 @@ public class DivideTask
         int s = array.get(i).getTime();
         int si = i;
 
-        for(i = 1; i < 4; i++)
+        for(i = 1; i < numberOfQueues; i++)
         {
             if (s > array.get(i).getTime()) {
                 s = array.get(i).getTime();
@@ -41,15 +53,15 @@ public class DivideTask
         return si;
     }
 
-    DivideTask(LinkedQueue<Data> mainQueue)
+    public void addInSubQueue(LinkedQueue<Data> mainQueue)
     {
-        int i = 0;
 
-        for(int j = 0; j < 4; j++)
+        for(int j = 0; j < maxQueues; j++)
         {
             if (mainQueue.isEmpty()) {
                 return ;
             }
+            numberOfQueues++;
             Data d = mainQueue.dequeue();
             SubQueue s = new SubQueue();
             s.enqueue(d);
@@ -59,7 +71,7 @@ public class DivideTask
 
         while (!mainQueue.isEmpty())
         {
-            i = lowestTimeTakingQueue();
+            int i = lowestTimeTakingQueue();
             Data d = mainQueue.dequeue();
             array.get(i).enqueue(d);
             array.get(i).setTime(Time(d.getSubj()));
@@ -68,7 +80,7 @@ public class DivideTask
 
     public void ShowData()
     {
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < numberOfQueues; i++)
         {
             while(!array.get(i).isEmpty())
             {

@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class DivideTask
 {
-    ArrayList<SubQueue> array = new ArrayList<>();
+    private ArrayList<SubQueue> array = new ArrayList<>();
 
-    static int Time(String subj)
+    private static int Time(String subj)
     {
         switch(subj)
         {
@@ -22,6 +22,23 @@ public class DivideTask
         }
 
         return 0;
+    }
+
+    private int lowestTimeTakingQueue()
+    {
+        int i = 0;
+        int s = array.get(i).getTime();
+        int si = i;
+
+        for(i = 1; i < 4; i++)
+        {
+            if (s > array.get(i).getTime()) {
+                s = array.get(i).getTime();
+                si = i;
+            }
+        }
+
+        return si;
     }
 
     DivideTask(LinkedQueue<Data> mainQueue)
@@ -42,13 +59,10 @@ public class DivideTask
 
         while (!mainQueue.isEmpty())
         {
+            i = lowestTimeTakingQueue();
             Data d = mainQueue.dequeue();
             array.get(i).enqueue(d);
             array.get(i).setTime(Time(d.getSubj()));
-            i++;
-            if (i > 3) {
-                i = 0;
-            }
         }
     }
 
